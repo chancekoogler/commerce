@@ -1,0 +1,13 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<form action="{% url 'watchlist' %}" method="POST">
+{% csrf_token %}
+{% for item in items %}
+
+<input type="checkbox" name="watchList" value={{item.id}}>  <a href="{% url 'item' item.id %}">{{ item.title }}</a>
+<br>
+{% endfor %}
+<input type="submit" value="Remove">
+</form>
+{% endblock %}

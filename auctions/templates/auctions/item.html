@@ -1,0 +1,46 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% if winner %}
+    <h4> {{winner}}</h4>
+    {% endif %}
+
+    <h1> {{ item.title }} </h1>
+    <h2> {{ item.description }} </h2>
+    <img src="{{item.image}}">
+    <h2> {{item.price}}</h2>
+
+    {% if logged %}
+    <form action="{% url 'item' item.id %}" method="POST">
+    {% csrf_token %}
+    {{ bid.bid }}
+    <br>
+    <br>
+    <h6> Add to Watchlist {{ bid.watchList}} </h6>
+    
+    <br>
+
+    {% if owner %}
+    <a href="{% url 'closeAuction' item.id %}">Close Listing</a>
+    {% endif %}
+
+    <h6> Make a Comment: </h6>
+    {{ bid.comment }}
+    <br>
+    <input type="submit" value="Submit">
+    </form>
+
+    {% if notice %}
+    <h6>{{notice}}</h6>
+    {% endif %}
+
+    {% endif %}
+    <br>
+    <h3> All Comments </h3>
+    {% for comment in comments %}
+    <strong><h6> Comment By &lt{{ comment.user }}&gt</h6></strong>
+    <p> {{ comment }} </p>
+    <br>
+    {% endfor %}
+    
+{% endblock %}
